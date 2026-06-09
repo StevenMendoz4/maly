@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Persona Favorita ❤️</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="pantalla-movil">
+
+        <header class="bienvenida">
+            <h1>¡Hola, Mi Amor! 🌟</h1>
+            <p>Bienvenida a tu lugar especial. Diseñado con mucho amor para ti.</p>
+        </header>
+
+
+        <section class="contador-contenedor">
+            <h2>El tiempo que llevamos construyendo nuestra historia:</h2>
+            <div id="contador">
+                <span id="dias">0</span> días, <br>
+                <span id="horas">0</span> horas, <br>
+                <span id="minutos">0</span> minutos y <br>
+                <span id="segundos">0</span> segundos.
+            </div>
+        </section>
+
+
+       <section class="reproductor-contenedor">
+            <div class="disco-icono">🎵</div>
+            <div class="info-musica">
+                <p id="titulo-cancion" class="titulo-cancion">Cargando canción...</p>
+                <p id="artista-cancion" class="artista">Por ti ❤️</p>
+            </div>
+            
+            <div class="controles-musica">
+                <button id="btn-anterior" class="btn-control">⏮️</button>
+                <button id="boton-reproducir" class="btn-play">▶️</button>
+                <button id="btn-siguiente" class="btn-control">⏭️</button>
+            </div>
+            
+            <audio id="musica-fondo" loop></audio>
+        </section>
+
+
+<section class="frasco-contenedor">
+            <h2>✨ Frasco de Cupones ✨</h2>
+            <p class="instrucciones">Toca el frasco para sacar un cupón de amor</p>
+            
+            <div id="frasco" class="frasco-grafico">
+                <div class="tapa"></div>
+                <div class="cuerpo">
+                    <span class="corazon-frasco">❤️</span>
+                    <div class="etiqueta">Cupones</div>
+                </div>
+            </div>
+
+            <div id="cupon-pantalla" class="cupon-modal oculto">
+                <div class="cupon-tarjeta">
+                    <span class="cerrar-cupon" id="btn-cerrar">❌</span>
+                    <h3>🎟️ ¡Tienes un Cupón! 🎟️</h3>
+                    <p id="texto-cupon">¡Vale por un abrazo gigante!</p>
+                    <button id="btn-canjear" class="btn-whatsapp">📲 Canjear por WhatsApp</button>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="cartas-contenedor">
+            <h2>✉️ Nuestro Buzón Secreto ✉️</h2>
+            
+            <div class="bloque-correo">
+                <p class="subtitulo-seccion">Envíame un mensajito instantáneo a mi correo:</p>
+                
+                <form id="formulario-contacto" action="https://formsubmit.co/brayanjsj3@gmail.com" method="POST" class="formulario-gmail">
+                    <input type="hidden" name="_subject" value="¡Tienes una nueva carta de amor! ❤️">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <textarea name="mensaje" id="mensaje-correo" placeholder="Escríbeme algo bonito aquí..." required></textarea>
+                    <button type="submit" id="btn-enviar-correo" class="btn-enviar-correo">🚀 Enviar a mi novio</button>
+                </form>
+                <p id="mensaje-exito" class="texto-exito oculto">✨ ¡Tu mensajito voló directo a mi correo! Te amo. ✨</p>
+            </div>
+
+            <hr class="separador">
+
+            <div class="bloque-diario">
+                <p class="subtitulo-seccion">Escribe tus cartas privadas (se guardan aquí):</p>
+                <textarea id="texto-carta-local" placeholder="Escribe un recuerdo o una carta para que no se borre..."></textarea>
+                <button id="btn-guardar-carta" class="btn-guardar">💾 Guardar en el buzón</button>
+                
+                <div id="galeria-cartas" class="galeria-cartas">
+                    </div>
+            </div>
+        </section>
+
+
+        <main class="contenido-futuro">
+            <p>❤️ Cada segundo a tu lado cuenta ❤️</p>
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
