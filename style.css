@@ -557,7 +557,6 @@ textarea:focus {
     height: 100%;
     border-radius: 50%;
     box-shadow: 0 0 20px #ff4da6, inset 0 0 15px #00f3ff;
-    transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
 }
 
 /* Botón de Girar */

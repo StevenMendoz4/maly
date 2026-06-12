@@ -364,41 +364,65 @@ function girarRuleta() {
     }
 
     // --- GIRO NORMAL SI NO HA JUGADO HOY ---
+   // --- GIRO NORMAL SI NO HA JUGADO HOY (ANIMACIÓN POR JAVASCRIPT) ---
     puedeGirar = false;
-    const ruletaVisual = document.getElementById("canvas-ruleta");
     
     const giros = Math.floor(Math.random() * 5) + 6; 
     const gradosAleatorios = Math.floor(Math.random() * 360);
-    const totalGrados = (giros * 360) + gradosAleatorios;
+    const objetivoGrados = (giros * 360) + gradosAleatorios;
+    
+    let gradosGirados = 0;
+    let velocidad = 15; // Velocidad con la que arranca a girar la ruleta
 
-    ruletaVisual.style.transform = `rotate(${totalGrados}deg)`;
-
-    setTimeout(() => {
-        // === AQUÍ ESTÁ EL CAMBIO FIJO ===
-        const anguloEfectivo = 360 - (totalGrados % 360);
-        const indiceGanador = Math.floor(((anguloEfectivo + 90) % 360) / (360 / totalOpciones));
-        const ganador = opcionesRuleta[indiceGanador];
-        // ===============================
-
-        localStorage.setItem("ultimoGiroRuleta", hoy);
-
-        document.getElementById("texto-resultado").innerText = `${ganador.texto} ${ganador.emoji}`;
+    function animar() {
+        gradosGirados += velocidad;
+        let anguloActual = gradosGirados % 360;
         
-        document.getElementById("btn-whatsapp-ruleta").style.display = "block";
-        if(document.getElementById("bloque-reinicio")) {
-            document.getElementById("btn-pedir-codigo").style.display = "none";
+        // Rotamos el canvas visualmente usando JavaScript
+        document.getElementById("canvas-ruleta").style.transform = `rotate(${gradosGirados}deg)`;
+
+        // Efecto físico: va frenando poco a poco al acercarse al final
+        if (gradosGirados >= objetivoGrados - 1000) {
+            velocidad *= 0.98; 
         }
 
-        const tuNumero = "50492287992"; 
-        const mensajeWhatsApp = encodeURIComponent(`¡Mi amor! Giré la ruleta del destino y nos tocó el plan: ${ganador.texto} ${ganador.emoji} 🥰 ¿Cuándo lo hacemos realidad?`);
-        
-        document.getElementById("btn-whatsapp-ruleta").onclick = function() {
-            window.open(`https://wa.me/${tuNumero}?text=${mensajeWhatsApp}`, '_blank');
-        };
+        // Si todavía tiene impulso, sigue animando
+        if (velocidad > 0.1) {
+            requestAnimationFrame(animar);
+        } else {
+            // === CÁLCULO EXACTO IMPEDIBLE ===
+            // Sincroniza la posición final con los 270 grados (flecha rosa de arriba "▼")
+            const anguloFlecha = (360 - anguloActual + 270) % 360;
+            const tamanoPorcion = 360 / totalOpciones;
+            const indiceGanador = Math.floor(anguloFlecha / tamanoPorcion) % totalOpciones;
+            const ganador = opcionesRuleta[indiceGanador];
+            // ================================
 
-        document.getElementById("resultado-pantalla").classList.remove("oculto-ruleta");
-        puedeGirar = true;
-    }, 4000);
+            localStorage.setItem("ultimoGiroRuleta", hoy);
+
+            // Mostrar el resultado en el modal de la pantalla
+            document.getElementById("texto-resultado").innerText = `${ganador.texto} ${ganador.emoji}`;
+            
+            document.getElementById("btn-whatsapp-ruleta").style.display = "block";
+            if(document.getElementById("bloque-reinicio")) {
+                document.getElementById("btn-pedir-codigo").style.display = "none";
+            }
+
+            // Configurar el mensaje para enviar a WhatsApp
+            const tuNumero = "50492287992"; 
+            const mensajeWhatsApp = encodeURIComponent(`¡Mi amor! Giré la ruleta del destino y nos tocó el plan: ${ganador.texto} ${ganador.emoji} 🥰 ¿Cuándo lo hacemos realidad?`);
+            
+            document.getElementById("btn-whatsapp-ruleta").onclick = function() {
+                window.open(`https://wa.me/${tuNumero}?text=${mensajeWhatsApp}`, '_blank');
+            };
+
+            document.getElementById("resultado-pantalla").classList.remove("oculto-ruleta");
+            puedeGirar = true;
+        }
+    }
+
+    // Lanza la animación de inmediato
+    animar();
 }
 
 // ==========================================
