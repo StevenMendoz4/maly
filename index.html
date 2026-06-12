@@ -8,21 +8,36 @@
 </head>
 <body>
 
+    <button class="boton-menu" onclick="toggleMenu()">☰ Menu</button>
+
+<div id="menuLateral" class="sidebar">
+    <button class="boton-cerrar" onclick="toggleMenu()">×</button>
+    
+    <h2>Nuestro Espacio</h2>
+    <hr>
+    
+    <a href="#seccion-inicio" onclick="toggleMenu()">🏠 Inicio / Contador</a>
+    <a href="#seccion-ruleta" onclick="toggleMenu()">🎲 Ruleta del Destino</a>
+    <a href="#seccion-cupones" onclick="toggleMenu()">🎟️ Frasco de Cupones</a>
+    
+    <a href="#proximamente" class="bloqueado" onclick="toggleMenu()">🔒 Nueva Dinámica (Pronto)</a>
+</div>
+
     <div class="pantalla-movil">
 
         <header class="bienvenida">
             <h1>¡Hola, Mi Amor! 🌟</h1>
-            <p>Bienvenida a tu lugar especial. Diseñado con mucho amor para ti.</p>
+            <p>Bienvenida a tu lugar especial. Diseñado con mucho amor para ti. Magaly❤️</p>
         </header>
 
 
-        <section class="contador-contenedor">
+        <section id="seccion-inicio" class="contador-contenedor">
             <h2>El tiempo que llevamos construyendo nuestra historia:</h2>
             <div id="contador">
                 <span id="dias">0</span> días, <br>
                 <span id="horas">0</span> horas, <br>
-                <span id="minutos">0</span> minutos y <br>
-                <span id="segundos">0</span> segundos.
+                <span id="minutos" >0</span> minutos y <br>
+                <span id="segundos"  >0</span> segundos.
             </div>
         </section>
 
@@ -41,29 +56,6 @@
             </div>
             
             <audio id="musica-fondo" loop></audio>
-        </section>
-
-
-<section class="frasco-contenedor">
-            <h2>✨ Frasco de Cupones ✨</h2>
-            <p class="instrucciones">Toca el frasco para sacar un cupón de amor</p>
-            
-            <div id="frasco" class="frasco-grafico">
-                <div class="tapa"></div>
-                <div class="cuerpo">
-                    <span class="corazon-frasco">❤️</span>
-                    <div class="etiqueta">Cupones</div>
-                </div>
-            </div>
-
-            <div id="cupon-pantalla" class="cupon-modal oculto">
-                <div class="cupon-tarjeta">
-                    <span class="cerrar-cupon" id="btn-cerrar">❌</span>
-                    <h3>🎟️ ¡Tienes un Cupón! 🎟️</h3>
-                    <p id="texto-cupon">¡Vale por un abrazo gigante!</p>
-                    <button id="btn-canjear" class="btn-whatsapp">📲 Canjear por WhatsApp</button>
-                </div>
-            </div>
         </section>
 
 
@@ -92,6 +84,62 @@
                 
                 <div id="galeria-cartas" class="galeria-cartas">
                     </div>
+            </div>
+        </section>
+
+
+       <section id="seccion-ruleta" class="ruleta-seccion">
+    <h2 class="titulo-neon">🎲 RULETA DEL DESTINO 🎲</h2>
+    <p class="instrucciones-ruleta">¿Qué hacemos hoy? ¡El destino elige!</p>
+
+    <div class="ruleta-wrapper">
+        <div class="indicador-neon">▼</div>
+        <canvas id="canvas-ruleta" width="320" height="320"></canvas>
+    </div>
+
+    <button id="btn-girar" class="btn-girar-neon" onclick="girarRuleta()">¡Girar Ruleta! 🌀</button>
+
+    <div id="resultado-pantalla" class="ruleta-modal oculto-ruleta">
+        <div class="ruleta-tarjeta">
+            <span class="cerrar-ruleta" onclick="cerrarResultado()">×</span>
+            <h3 class="texto-ganador-titulo">✨ ¡EL DESTINO HA HABLADO! ✨</h3>
+            <p id="texto-resultado">...</p>
+            
+            <button id="btn-whatsapp-ruleta" class="btn-whatsapp">📲 Reclamar Plan por WhatsApp</button>
+            
+            <div id="bloque-reinicio" style="margin-top: 20px; border-top: 1px dashed #ff4da6; padding-top: 15px;">
+                <p style="font-size: 12px; color: #b3b3b3; margin-bottom: 5px;">¿Quieres volver a girar hoy? ¡Pídele el código secreto a tu novio!</p>
+                <p id="contador-pases-texto" style="font-size: 13px; color: #00f3ff; font-weight: bold; margin-bottom: 10px;">Pases VIP disponibles hoy: 5 de 5</p>
+                
+                <input type="text" id="codigo-reinicio-input" placeholder="Introduce el código VIP..." style="padding: 8px; width: 70%; border-radius: 5px; border: 1px solid #00f3ff; background: #222; color: white; text-align: center; margin-bottom: 10px;">
+                <button class="btn-girar-neon" onclick="verificarCodigoReinicio()" style="padding: 8px 15px; font-size: 13px;">Validar Código 🔑</button>
+                <button id="btn-pedir-codigo" class="btn-whatsapp" style="background-color: #00f3ff; color: #12161a; margin-top: 10px; font-size: 13px;">💬 Pedir código por WhatsApp</button>
+            </div>
+            </div>
+    </div>
+</section>
+
+
+
+        <section id="seccion-cupones" class="frasco-contenedor">
+            <h2>✨ Frasco de Cupones ✨</h2>
+            <p class="instrucciones">Toca el frasco para sacar un cupón de amor</p>
+            
+            <div id="frasco" class="frasco-grafico">
+                <div class="tapa"></div>
+                <div class="cuerpo">
+                    <span class="corazon-frasco">❤️</span>
+                    <div class="etiqueta">Cupones</div>
+                </div>
+            </div>
+
+            <div id="cupon-pantalla" class="cupon-modal oculto">
+                <div class="cupon-tarjeta">
+                    <span class="cerrar-cupon" id="btn-cerrar">❌</span>
+                    <h3>🎟️ ¡Tienes un Cupón! 🎟️</h3>
+                    <p id="texto-cupon">¡Vale por un abrazo gigante!</p>
+                    <button id="btn-canjear" class="btn-whatsapp">📲 Canjear por WhatsApp</button>
+                </div>
             </div>
         </section>
 
