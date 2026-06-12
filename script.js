@@ -329,19 +329,16 @@ const LIMITE_PASES = 5;    // Máximo de pases VIP por día
 function girarRuleta() {
     if (!puedeGirar) return;
 
-    const hoy = new Date().toDateString(); // "Thu Jun 11 2026"
+    const hoy = new Date().toDateString(); 
     const ultimoGiro = localStorage.getItem("ultimoGiroRuleta");
 
     // --- ENTRADA AL SISTEMA VIP SI YA GIRÓ HOY ---
     if (ultimoGiro === hoy) {
-        // Revisamos cuántos pases lleva hoy
         let pasesUsadosHoy = parseInt(localStorage.getItem("pasesUsados_" + hoy)) || 0;
         let pasesRestantes = LIMITE_PASES - pasesUsadosHoy;
 
-        // Actualizar contador visual en la tarjeta
         document.getElementById("contador-pases-texto").innerText = `Pases VIP disponibles hoy: ${pasesRestantes} de ${LIMITE_PASES}`;
 
-        // Si ya usó los 5, bloqueo total inmediato
         if (pasesUsadosHoy >= LIMITE_PASES) {
             document.getElementById("texto-resultado").innerText = "❌ ¡Se acabaron los pases! ❌";
             document.getElementById("contador-pases-texto").innerText = "Ya usaste tus 5 pases VIP de hoy, mi amor. ¡Mañana tienes 5 más! ❤️";
@@ -351,26 +348,22 @@ function girarRuleta() {
             return; 
         }
 
-        // Si tiene pases disponibles, generamos la clave matemática al azar
         const numeroBase = Math.floor(10 + Math.random() * 80); 
-        codigoRealOculto = numeroBase.toString(); // El número real que desbloquea (Ej: 20)
+        codigoRealOculto = numeroBase.toString(); 
 
-        const numeroEncriptado = numeroBase + 33; // La trampa para el mensaje (Ej: 20 + 33 = 53)
+        const numeroEncriptado = numeroBase + 33; 
 
-        // Preparamos el diseño del modal para pedir código
         document.getElementById("texto-resultado").innerText = "⚠️ Giro diario completado ⚠️";
-        document.getElementById("btn-whatsapp-ruleta").style.display = "none"; // Ocultamos reclamar premio
-        document.getElementById("btn-pedir-codigo").style.display = "block"; // Mostramos pedir pase
+        document.getElementById("btn-whatsapp-ruleta").style.display = "none"; 
+        document.getElementById("btn-pedir-codigo").style.display = "block"; 
 
-        // Activamos el botón de WhatsApp pasándole el número encriptado (+33)
         configurarBotonPedirCodigo(numeroEncriptado, hoy);
 
         document.getElementById("resultado-pantalla").classList.remove("oculto-ruleta");
         return; 
     }
-    // ---------------------------------------------
 
-    // --- GIRO NORMAL SINO HA JUGADO HOY ---
+    // --- GIRO NORMAL SI NO HA JUGADO HOY ---
     puedeGirar = false;
     const ruletaVisual = document.getElementById("canvas-ruleta");
     
@@ -381,24 +374,21 @@ function girarRuleta() {
     ruletaVisual.style.transform = `rotate(${totalGrados}deg)`;
 
     setTimeout(() => {
-        const anguloRealEfectivo = (totalGrados % 360);
-        const indiceGanador = Math.floor((totalOpciones - (anguloRealEfectivo / 36)) % totalOpciones);
+        // === AQUÍ ESTÁ EL CAMBIO FIJO ===
+        const anguloEfectivo = 360 - (totalGrados % 360);
+        const indiceGanador = Math.floor(((anguloEfectivo + 90) % 360) / (360 / totalOpciones));
         const ganador = opcionesRuleta[indiceGanador];
+        // ===============================
 
-        // Guardamos que ya hizo su tiro diario legal
         localStorage.setItem("ultimoGiroRuleta", hoy);
 
-        // Mostrar resultado en el modal
         document.getElementById("texto-resultado").innerText = `${ganador.texto} ${ganador.emoji}`;
         
-        // Aseguramos que se vea el botón verde de reclamar premio y se oculte el de pedir VIP
         document.getElementById("btn-whatsapp-ruleta").style.display = "block";
         if(document.getElementById("bloque-reinicio")) {
-            // Escondemos el panel del código cuando gana legalmente para no confundirla
             document.getElementById("btn-pedir-codigo").style.display = "none";
         }
 
-        // WhatsApp para reclamar el premio ganado
         const tuNumero = "50492287992"; 
         const mensajeWhatsApp = encodeURIComponent(`¡Mi amor! Giré la ruleta del destino y nos tocó el plan: ${ganador.texto} ${ganador.emoji} 🥰 ¿Cuándo lo hacemos realidad?`);
         
