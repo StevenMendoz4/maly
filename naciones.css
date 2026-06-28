@@ -1,0 +1,398 @@
+/* =========================================
+   SISTEMA DE PANTALLA DIVIDIDA Y MODALES (NACIONES)
+   ========================================= */
+
+.body-naciones {
+    overflow-x: hidden;
+    overflow-y: auto; /* Permite scroll vertical adaptativo */
+    min-height: 100vh;
+    background: #020617;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.split-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- LOGICA DE LOS PANELES VERTICALES --- */
+.nacion-panel {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: flex 0.7s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+/* Fondos individuales */
+.nacion-panel.ing .panel-background { background-image: url('assets/fondomoises.png'); }
+.nacion-panel.esc .panel-background { background-image: url('assets/fondojeremias.png'); }
+.nacion-panel.gal .panel-background { background-image: url('assets/fondoelias.png'); }
+.nacion-panel.irl .panel-background { background-image: url('assets/fondojob.png'); }
+
+.panel-background {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.35) grayscale(0.2);
+    transition: transform 0.8s ease, filter 0.6s ease;
+    z-index: 1;
+}
+
+.panel-content {
+    position: relative;
+    z-index: 2;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+.nacion-panel h2 {
+    color: #ffffff;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+}
+
+.panel-resumen, .btn-identidad {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+.panel-resumen {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+/* --- HOVER EN ESCRITORIOS --- */
+@media (min-width: 769px) {
+    .nacion-panel:hover {
+        flex: 6;
+    }
+    .nacion-panel:hover .panel-background {
+        filter: brightness(0.55) grayscale(0);
+        transform: scale(1.03);
+    }
+    .nacion-panel:hover .panel-resumen,
+    .nacion-panel:hover .btn-identidad {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .nacion-panel:hover .btn-identidad {
+        transition-delay: 0.1s;
+    }
+}
+
+/* --- BOTÓN DE IDENTIDAD --- */
+.btn-identidad {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.bandera-btn {
+    width: 70px;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-identidad span {
+    color: #ffffff;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-identidad:hover .bandera-btn {
+    transform: scale(1.1);
+    border-color: #00f3ff;
+}
+
+.btn-identidad:hover span {
+    color: #00f3ff;
+}
+
+/* =========================================
+   MODAL DE CRISTAL SCROLLABLE
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-cristal {
+    background: rgba(10, 25, 47, 0.94);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(0, 243, 255, 0.2);
+    border-top: 5px solid #00f3ff;
+    width: 90%;
+    max-width: 650px;
+    max-height: 85vh;
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.open .modal-cristal {
+    transform: scale(1);
+}
+
+.modal-cerrar {
+    position: absolute;
+    top: 15px; right: 20px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal-cerrar:hover { color: #00f3ff; }
+
+.modal-body {
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-top: 10px;
+}
+
+.modal-body::-webkit-scrollbar { width: 5px; }
+.modal-body::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 10px; }
+
+.modal-info-title {
+    font-size: 1.6rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.modal-lista-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.imperdible-item {
+    display: flex;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.imperdible-numero {
+    position: absolute;
+    top: 8px; left: 8px;
+    background: #00f3ff;
+    color: #000;
+    font-weight: 800;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    z-index: 5;
+}
+
+.imperdible-img {
+    width: 160px;
+    min-width: 160px;
+    height: 120px;
+}
+
+.imperdible-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imperdible-info {
+    padding: 1rem;
+    text-align: left;
+}
+
+.imperdible-info h4 {
+    color: #ffffff;
+    font-size: 1.05rem;
+    margin: 0 0 6px 0;
+}
+
+.imperdible-info p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* =========================================
+   SÚPER ADAPTACIÓN PARA TELÉFONOS (RESPONSIVO)
+   ========================================= */
+@media (max-width: 768px) {
+    .split-container {
+        flex-direction: column; /* De horizontal a filas verticales */
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .nacion-panel {
+        width: 100%;
+        height: 25vh; /* Cada panel toma una cuarta parte de la altura visual */
+        flex: none;
+    }
+
+    /* Forzar que en celulares todo el contenido sea visible sin hover */
+    .panel-resumen, .btn-identidad {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .panel-resumen {
+        display: none; /* Ocultamos resumen en celular para ahorrar espacio de botones */
+    }
+
+    .nacion-panel h2 {
+        font-size: 1.6rem;
+        margin-bottom: 4px;
+    }
+
+    .bandera-btn {
+        width: 50px;
+    }
+
+    .btn-identidad span {
+        font-size: 0.75rem;
+        margin-top: 4px;
+    }
+
+    .imperdible-item {
+        flex-direction: column;
+    }
+
+    .imperdible-img {
+        width: 100%;
+        height: 140px;
+    }
+}
+
+/* --- NAVBAR GENERAL FLOTANTE --- */
+.nav-naciones-general {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 243, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    box-sizing: border-box;
+    z-index: 90; /* Por debajo del modal, por encima de los paneles */
+}
+
+.nav-brand {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.nav-botones {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.btn-inicio {
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-inicio:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.btn-mundo {
+    color: #00f3ff;
+    background: rgba(0, 243, 255, 0.05);
+    border: 1px solid rgba(0, 243, 255, 0.25);
+}
+
+.btn-mundo:hover {
+    background: #00f3ff;
+    color: #020617;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+}
+
+/* --- AJUSTE EXTRAS PARA ACOMODAR LA NAVBAR --- */
+.split-container {
+    height: calc(100vh - 60px) !important; /* Descuenta los 60px de la barra */
+    margin-top: 60px;
+}
+
+@media (max-width: 768px) {
+    .nav-naciones-general {
+        padding: 0 15px;
+    }
+    .nav-brand {
+        display: none; /* Oculta el texto en celulares para que quepan bien los botones */
+    }
+    .nav-botones {
+        width: 100%;
+        justify-content: space-between; /* Distribuye los dos botones en los bordes */
+    }
+    .nav-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}

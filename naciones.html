@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naciones del Reino Unido</title>
+    <link rel="stylesheet" href="naciones.css">
+</head>
+<body class="body-naciones">
+<audio id="musica-nacion" loop src="assets/musica1.mp3"></audio>
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+<nav class="nav-naciones-general">
+    <div class="nav-brand">📖 Reflexiones</div>
+    <div class="nav-botones">
+        <a href="index.html" class="nav-btn btn-inicio">🏠 Inicio</a>
+        <a href="mundo.html" class="nav-btn btn-mundo">🌍 Volver al Mundo</a>
+    </div>
+</nav>
+    <!-- CONTENEDOR DE PANTALLA DIVIDIDA (100vh) -->
+    <main class="split-container">
+        
+        <!-- MOISES-->
+        <section class="nacion-panel ing" data-nacion="inglaterra">
+            <div class="panel-background"></div>
+            <div class="panel-content">
+                <h2>Moises</h2>
+                <p class="panel-resumen">Aqui veremos como moises, clama a jehova porque no soporta al pueblo el siente mucha carga para el solo, y desea que le quiten la vida.</p>
+                
+                <div class="btn-identidad">
+                    <img src="assets/btnmoises.png" alt="Bandera de Inglaterra" class="bandera-btn">
+                    <span>Leer clamor de Moises</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- JEREMIAS -->
+        <section class="nacion-panel esc" data-nacion="escocia">
+            <div class="panel-background"></div>
+            <div class="panel-content">
+                <h2>Jeremias</h2>
+                <p class="panel-resumen">Valles brumosos, castillos históricos, el sonido de las gaitas y lagos misteriosos.</p>
+                
+                <div class="btn-identidad">
+                    <img src="assets/btnjeremias.png" alt="Bandera de Escocia" class="bandera-btn">
+                    <span>leer cansancio de jeremias</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ELIAS -->
+        <section class="nacion-panel gal" data-nacion="gales">
+            <div class="panel-background"></div>
+            <div class="panel-content">
+                <h2>Elias</h2>
+                <p class="panel-resumen">El reino de los dragones, colinas esmeralda y una herencia poética celta inquebrantable.</p>
+                
+                <div class="btn-identidad">
+                    <img src="assets/btnelias.png" alt="Bandera de Gales" class="bandera-btn">
+                    <span>leer desesperacion de elias</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOB -->
+        <section class="nacion-panel irl" data-nacion="irlanda">
+            <div class="panel-background"></div>
+            <div class="panel-content">
+                <h2>Job</h2>
+                <p class="panel-resumen">Costas geológicas asombrosas, mitos de gigantes y una vibrante cultura folclórica.</p>
+                
+                <div class="btn-identidad">
+                    <img src="assets/btnjob.png" alt="Bandera de Irlanda del Norte" class="bandera-btn">
+                    <span>leer perdidas de job </span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- VENTANA FLOTANTE INTERACTIVA (MODAL DE CRISTAL) -->
+    <div class="modal-overlay" id="modalIdentidad">
+        <div class="modal-cristal">
+            <button class="modal-cerrar" id="btnCerrarModal">&times;</button>
+            <div class="modal-body" id="modalContenido">
+                <!-- Se inyecta dinámicamente desde naciones.js -->
+            </div>
+        </div>
+    </div>
+    <script src="naciones.js"></script>
+</body>
+</html>
