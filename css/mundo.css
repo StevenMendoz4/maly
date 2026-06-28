@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    background-color: #000;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    width: 100vw;
+    height: 100vh;
+}
+
+#canvas-container {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#ui-overlay {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    width: 90%; /* Ajuste responsivo de ancho */
+    max-width: 500px;
+    pointer-events: none; /* Deja pasar clics generales al 3D */
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+}
+
+#ui-overlay h1 {
+    font-size: 2rem;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+    color: #00f3ff;
+}
+
+#ui-overlay p {
+    font-size: 0.8rem;
+    color: #88a0c0;
+}
+
+/* Tooltip estético para los países */
+#tooltip {
+    position: absolute;
+    padding: 10px 15px;
+    background: rgba(10, 25, 50, 0.9);
+    border: 1px solid #00f3ff;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    pointer-events: none;
+    display: none;
+    z-index: 20;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+    transform: translate(-50%, -100%);
+}
+
+.btn-regresar {
+    display: inline-block;
+    text-decoration: none;
+    color: #00f3ff;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    pointer-events: auto; /* IMPORTANTE: Permite hacer clic en teléfonos sin bloqueo 3D */
+}
+
+.btn-regresar:hover {
+    background: #00f3ff;
+    color: #010204;
+    box-shadow: 0 0 15px #00f3ff;
+    transform: translateY(-2px);
+}
+
+/* --- ADAPTACIÓN RESPONSIVA CELULARES --- */
+@media (max-width: 600px) {
+    #ui-overlay {
+        top: 20px;
+    }
+    #ui-overlay h1 {
+        font-size: 1.3rem; /* Letra más chica para que no se corte */
+        letter-spacing: 2px;
+    }
+    #ui-overlay p {
+        font-size: 0.7rem;
+    }
+    .btn-regresar {
+        font-size: 11px;
+        padding: 6px 12px;
+        margin-bottom: 8px;
+    }
+    #tooltip {
+        font-size: 0.75rem;
+        padding: 8px 12px;
+    }
+}
